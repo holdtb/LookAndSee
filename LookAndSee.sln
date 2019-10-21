@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LookAndSee.Core", "LookAndSee.Core\LookAndSee.Core.csproj", "{722CE786-AD0C-4F54-A3A5-79D647B77099}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LookAndSee.Test", "LookAndSee.Test\LookAndSee.Test.csproj", "{E392D3B7-EF45-41BF-B50C-D621F3812FF7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{722CE786-AD0C-4F54-A3A5-79D647B77099}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{722CE786-AD0C-4F54-A3A5-79D647B77099}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{722CE786-AD0C-4F54-A3A5-79D647B77099}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{722CE786-AD0C-4F54-A3A5-79D647B77099}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E392D3B7-EF45-41BF-B50C-D621F3812FF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E392D3B7-EF45-41BF-B50C-D621F3812FF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E392D3B7-EF45-41BF-B50C-D621F3812FF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E392D3B7-EF45-41BF-B50C-D621F3812FF7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
