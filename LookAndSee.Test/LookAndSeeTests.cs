@@ -20,7 +20,7 @@ namespace LookAndSee.Test
             var generator = new Generator();
 
             // Act
-            var result = generator.Current;
+            var result = generator.Result;
 
             // Assert
             result.ShouldBe("1");

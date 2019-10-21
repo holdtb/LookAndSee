@@ -1,58 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 
 namespace LookAndSee.Core
 {
     public class Generator
     {
-        public string Current { get; private set; }
+        public string Result { get; private set; } = "1";
+        private int Index { get; set; } = 1;
 
-        public Generator()
-        {
-            Current = "1";
-        }
-
-        public string Next(int n)
+        public string Next(int n = 1)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
             
             for (var i = 0; i < n; i++)
             {
-                Next();
+                Process();
             }
 
             stopwatch.Stop();
             
-            Console.WriteLine($"Generated {n+1}'th index of LookAndSee sequence in {stopwatch.Elapsed}.");
-            Console.WriteLine($"Result has length {Current.Length}");
+            Console.WriteLine($"Generated index {Index} of LookAndSee sequence in {stopwatch.Elapsed}.");
+            Console.WriteLine($"Result has length {Result.Length}");
 
-            return Current;
+            return Result;
         }
 
-        public string Next()
+        private void Process()
         {
-            var keyCounts = CountDigits(Current);
-            Current = CreateNext(keyCounts);
-            return Current;
+            var buckets = CreateBuckets(Result);
+            Result = buckets.CreateSequence();
+            Index++;
         }
 
-        private static string CreateNext(IEnumerable<KeyCount> groups)
-        {
-            var sb = new StringBuilder();
-            foreach (var group in groups)
-            {
-                sb.Append(group.Count);
-                sb.Append(group.Key);
-            }
-            return sb.ToString();
-        }
 
-        private static IEnumerable<KeyCount> CountDigits(string s)
+        private static IEnumerable<Bucket> CreateBuckets(string input)
         {
-            var characters = s.ToCharArray();
+            var characters = input.ToCharArray();
             var index = 0;
             var count = 0;
 
@@ -60,9 +45,9 @@ namespace LookAndSee.Core
             {
                 var character = characters[index];
 
-                if (index + 1 == characters.Length) // Last character, close off final bucket
+                if (index + 1 == characters.Length) // Last character of input, close off final bucket
                 {
-                    yield return new KeyCount
+                    yield return new Bucket
                     {
                         Key = character.ToString(),
                         Count = ++count
@@ -70,28 +55,22 @@ namespace LookAndSee.Core
                     yield break;
                 }
 
-                if (character != characters[index + 1]) // Does not match next character - last in the current bucket
+                if (character != characters[index + 1]) // last character in the current bucket
                 {
-                    yield return new KeyCount
+                    yield return new Bucket
                     {
                         Key = character.ToString(),
                         Count = ++count
                     };
                     count = 0;
                 }
-                else // Match, same bucket, so increment count
+                else // Match in same bucket
                 {
                     count++;
                 }
 
                 index++;
             }
-        }
-
-        private class KeyCount
-        {
-            public string Key { get; set; }
-            public int Count { get; set; }
         }
     }
 }
