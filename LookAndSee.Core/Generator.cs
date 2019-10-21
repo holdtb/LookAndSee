@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 using System.Text;
 
 namespace LookAndSee.Core
 {
     public class Generator
     {
-
         public string Current { get; private set; }
 
         public Generator()
@@ -17,10 +16,19 @@ namespace LookAndSee.Core
 
         public string Next(int n)
         {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+            
             for (var i = 0; i < n; i++)
             {
                 Next();
             }
+
+            stopwatch.Stop();
+            
+            Console.WriteLine($"Generated {n+1}'th index of LookAndSee sequence in {stopwatch.Elapsed}.");
+            Console.WriteLine($"Result has length {Current.Length}");
+
             return Current;
         }
 
@@ -31,7 +39,7 @@ namespace LookAndSee.Core
             return Current;
         }
 
-        private string CreateNext(List<KeyCount> groups)
+        private static string CreateNext(IEnumerable<KeyCount> groups)
         {
             var sb = new StringBuilder();
             foreach (var group in groups)
@@ -42,30 +50,42 @@ namespace LookAndSee.Core
             return sb.ToString();
         }
 
-        private List<KeyCount> CountDigits(string s)
+        private static IEnumerable<KeyCount> CountDigits(string s)
         {
-            var characters = s.Split();
-            var digits = new List<KeyCount>();
+            var characters = s.ToCharArray();
             var index = 0;
             var count = 0;
 
-            while(index < characters.Length)
+            while (index < characters.Length)
             {
-                if(index == 0)
+                var character = characters[index];
+
+                if (index + 1 == characters.Length) // Last character, close off final bucket
                 {
-                    count++;
-                } else if(characters[index] != characters[index-1])
+                    yield return new KeyCount
+                    {
+                        Key = character.ToString(),
+                        Count = ++count
+                    };
+                    yield break;
+                }
+
+                if (character != characters[index + 1]) // Does not match next character - last in the current bucket
                 {
-                    digits.Add(new KeyCount { Key=characters[index-1], Count = count });
-                }else
+                    yield return new KeyCount
+                    {
+                        Key = character.ToString(),
+                        Count = ++count
+                    };
+                    count = 0;
+                }
+                else // Match, same bucket, so increment count
                 {
                     count++;
                 }
+
                 index++;
             }
-           
-
-            return digits;
         }
 
         private class KeyCount

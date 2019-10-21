@@ -84,5 +84,43 @@ namespace LookAndSee.Test
             // Assert
             result.ShouldBe("312211");
         }
+
+        [Test]
+        public void FourtiethInSequence()
+        {
+            // Arrange
+            var generator = new Generator();
+
+            // Act
+            var result = generator.Next(39);
+
+            // Assert
+            result.ShouldNotBeNull();
+        }
+
+        [Test]
+        public void FiftiethInSequence()
+        {
+            // Arrange
+            var generator = new Generator();
+            // Act
+            var result = generator.Next(49);
+
+            // Assert
+            result.ShouldNotBeNull();
+        }
+
+        [Test]
+        public void SixtiethInSequence()
+        {
+            // Arrange
+            var generator = new Generator();
+
+            // Act
+            var result = generator.Next(59);
+
+            // Assert
+            result.ShouldNotBeNull();
+        }
     }
 }
